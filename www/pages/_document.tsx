@@ -66,6 +66,9 @@ MyDocument.getInitialProps = ctx => {
   // 3. app.render
   // 4. page.render
 
+  // save serverHost
+  process.serverHost = ctx.req.headers.host;
+
   // Render app and page and get the context of the page with collected side effects.
   let pageContext: PageContext | undefined;
   const page = ctx.renderPage((Component: ComponentType<PagePropsWithPageContext>) => {

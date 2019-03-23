@@ -30,7 +30,7 @@ const Hello = ({ classes, data }) => {
 }
 
 Hello.getInitialProps = async function ({ req }) {
-  return await helloRequest(req);
+  return await helloRequest();
 }
 
 export default withStyles(styles)(Hello);
