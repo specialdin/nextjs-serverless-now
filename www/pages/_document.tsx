@@ -44,6 +44,7 @@ interface PagePropsWithPageContext extends AnyPageProps {
 }
 
 MyDocument.getInitialProps = ctx => {
+
   // Resolution order
   //
   // On the server:
