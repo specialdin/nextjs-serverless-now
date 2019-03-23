@@ -7,7 +7,7 @@ Demo: https://nextjs-serverless.specialdin.now.sh
 ```
 npm i -g now
 npm i
-npm run dev (⇧ + ⌘ + B from vscode)
+npm run dev (Shift + Cmd + B from vscode)
 ```
 
 # Deploy to ZEIT
