@@ -5,6 +5,7 @@ Demo: https://nextjs-serverless.specialdin.now.sh
 
 # Development
 ```
+npm i -g now
 npm i
 npm run dev
 ```
