@@ -1,0 +1,1 @@
+now --target production -d
