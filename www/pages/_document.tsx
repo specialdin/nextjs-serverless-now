@@ -1,20 +1,11 @@
-import React, { ComponentType } from 'react';
-import Document, { AnyPageProps, Head, Main, NextScript, PageProps } from 'next/document';
-import { Theme } from '@material-ui/core';
-import { ThemeProviderProps } from '@material-ui/styles/ThemeProvider';
-import flush from 'styled-jsx/server';
-import { PageContext } from '../getPageContext';
+import { ServerStyleSheets } from "@material-ui/styles";
+import Document, { Head, Main, NextScript } from "next/document";
+import React from "react";
+import flush from "styled-jsx/server";
+import theme from "../theme";
 
-class MyDocument extends Document<{
-  pageContext: ThemeProviderProps<Theme>;
-}> {
-
+class MyDocument extends Document {
   render() {
-    const { pageContext } = this.props;
-
-    const theme = pageContext && typeof pageContext.theme === 'function' ? pageContext.theme(null) : pageContext && pageContext.theme as Theme;
-    const themeColor = theme && theme.palette.primary.main;
-
     return (
       <html lang="en" dir="ltr">
         <Head>
@@ -25,10 +16,11 @@ class MyDocument extends Document<{
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
           {/* PWA primary color */}
-          <meta name="theme-color" content={themeColor} />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
-          <link rel="stylesheet" href="//cdn.materialdesignicons.com/3.5.95/css/materialdesignicons.min.css"></link>
-          {/* <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" /> */}
+          <meta name="theme-color" content={theme.palette.primary.main} />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
+          />
         </Head>
         <body>
           <Main />
@@ -39,12 +31,7 @@ class MyDocument extends Document<{
   }
 }
 
-interface PagePropsWithPageContext extends AnyPageProps {
-  pageContext: PageContext;
-}
-
-MyDocument.getInitialProps = ctx => {
-
+MyDocument.getInitialProps = async ctx => {
   // Resolution order
   //
   // On the server:
@@ -71,35 +58,25 @@ MyDocument.getInitialProps = ctx => {
   process.serverHost = ctx.req.headers.host;
 
   // Render app and page and get the context of the page with collected side effects.
-  let pageContext: PageContext | undefined;
-  const page = ctx.renderPage((Component: ComponentType<PagePropsWithPageContext>) => {
-    const WrappedComponent: ComponentType<{ pageContext: PageContext } & PageProps> = props => {
-      pageContext = props.pageContext;
-      return <Component {...props} />;
-    };
+  const sheets = new ServerStyleSheets();
+  const originalRenderPage = ctx.renderPage;
 
-    return WrappedComponent;
-  });
+  ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceApp: App => props => sheets.collect(<App {...props} />)
+    });
 
-  let css: string;
-  // It might be undefined, e.g. after an error.
-  if (pageContext) {
-    css = (pageContext as PageContext).sheetsRegistry.toString();
-  }
+  const initialProps = await Document.getInitialProps(ctx);
 
   return {
-    ...page,
-    pageContext,
+    ...initialProps,
     // Styles fragment is rendered after the app and page rendering finish.
     styles: (
       <React.Fragment>
-        <style
-          id="jss-server-side"
-          dangerouslySetInnerHTML={{ __html: css }}
-        />
+        {sheets.getStyleElement()}
         {flush() || null}
       </React.Fragment>
-    ),
+    )
   };
 };
 

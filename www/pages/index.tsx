@@ -1,27 +1,27 @@
 import { Theme } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
 import { StyleRules } from '@material-ui/core/styles';
-import Link from 'next/link'
+import { withStyles } from '@material-ui/styles';
+import Link from 'next/link';
+import MainLayout from '../layouts/main/main';
 
-const styles = (theme: Theme) => ({
-  '@global': {
-    html: {
-      fontSize: '62.5% !important'
+const styles = (theme: Theme) =>
+  ({
+    root: {
+      margin: '1.0rem',
+      color: theme.palette.primary.main
     }
-  },
-  root: {
-    margin: '1.0rem',
-    color: theme.palette.primary.main
-  }
-} as StyleRules);
+  } as StyleRules);
 
 const Index = ({ classes }) => {
-
   return (
-    <div className={classes.root}>
-      <Link href="/hello"><a>Link To Another Page</a></Link>
-    </div>
-  )
-}
+    <MainLayout>
+      <div className={classes.root}>
+        <Link href='/hello'>
+          <a>Link To Another Page</a>
+        </Link>
+      </div>
+    </MainLayout>
+  );
+};
 
 export default withStyles(styles)(Index);

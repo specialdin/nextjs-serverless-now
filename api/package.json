@@ -2,6 +2,6 @@
   "name": "example-api",
   "version": "1.0.0",
   "dependencies": {
-    "micro": "^9.3.3"
+    "micro": "^9.3.4"
   }
 }

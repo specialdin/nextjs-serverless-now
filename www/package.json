@@ -6,19 +6,19 @@
     "now-build": "next build"
   },
   "dependencies": {
-    "@material-ui/core": "^4.0.0-alpha.3",
-    "@material-ui/styles": "^4.0.0-alpha.3",
+    "@material-ui/core": "^4.0.1",
+    "@material-ui/styles": "^4.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "isomorphic-unfetch": "^3.0.0",
     "jss": "^10.0.0-alpha.16",
-    "next": "^8.0.3",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "next": "^8.1.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "@types/next": "^8.0.1",
-    "@types/react": "^16.8.6",
-    "@types/react-dom": "^16.8.2",
-    "typescript": "^3.3.3333"
+    "@types/next": "^8.0.5",
+    "@types/react": "^16.8.19",
+    "@types/react-dom": "^16.8.4",
+    "typescript": "^3.5.1"
   }
 }

@@ -1,6 +1,16 @@
 {
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll": true
+  },
+  "editor.codeActionsOnSaveTimeout": 2000,
+  "editor.formatOnSaveTimeout": 2000,
   "files.insertFinalNewline": true,
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.printWidth": 110,
+  "prettier.jsxBracketSameLine": true,
   "typescript.tsdk": "./www/node_modules/typescript/lib"
 }
